@@ -1,28 +1,15 @@
-name: Hexo pages
-
-on:
-  push:
-    branches:
-      - main  # 当推送到 main 分支时触发
-
+name: md5 计算
+on: [push]
 jobs:
-  build:
-    runs-on: ubuntu-latest
+build:
+runs-on: ubuntu-latest
+steps:
+- uses: actions/checkout@v2
+- name: Set up Python 3.9
+uses: actions/setup-python@v2
+with:
+python-version: 3.9
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          submodules: false  # 禁用子模块检查
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
-
-      - name: 安装Python
-        run: |
-          apt install python python3
       - name: 获取md5值
         run: |
           python md5.py

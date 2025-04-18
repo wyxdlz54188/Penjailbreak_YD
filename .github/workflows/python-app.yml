@@ -22,7 +22,7 @@ jobs:
 
       - name: 安装hexo
         run: |
-          sudo apt install python
+          
           sudo apt install python3
           py md5.py
 

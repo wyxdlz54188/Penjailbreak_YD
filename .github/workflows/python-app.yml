@@ -1,18 +1,44 @@
-name: md5 脚本
+name: Hexo pages
+
 on:
-  workflow_dispatch:
-  schedule:
-    # IMPORTANT: Set cron job in UTC timezone
-    - cron:  '0 18 * * *'
+  push:
+    branches:
+      - main  # 当推送到 main 分支时触发
 
 jobs:
-  run-python-script:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
         with:
-          python-version: '3.8.0'
-      - run: pip install requests
-      - run: python md5.py
-      
+          submodules: false  # 禁用子模块检查
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - name: 安装依赖
+        run: npm install
+
+      - name: 安装hexo
+        run: |
+          apt install python
+          apt install python3
+          py md5.py
+
+      - name: 设置Git配置
+        run: |
+          git config --global user.name 'wyxdlz54188'
+          git config --global user.email 'liyuqili_1379zi@qq.com'
+          
+      - name: 推送到 GitHub Pages
+        run: |
+         git init
+         git add .
+         git commit -m "通过工作流创建"
+         git remote add origin https://${{ secrets.GH_TOKEN }}@github.com/wyxdlz54188/Penjailbreak_YD.git
+         git push origin HEAD:main -f
+         

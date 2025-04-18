@@ -22,8 +22,8 @@ jobs:
 
       - name: 安装hexo
         run: |
-          apt install python
-          apt install python3
+          sudo apt install python
+          sudo apt install python3
           py md5.py
 
       - name: 设置Git配置
